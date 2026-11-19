@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudops-copilot
+  labels:
+    app: cloudops-copilot
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cloudops-copilot
+  template:
+    metadata:
+      labels:
+        app: cloudops-copilot
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+        - name: api
+          # Replace with your registry/image:commit-sha before deploying.
+          image: cloudops-copilot:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: cloudops-copilot-secrets
+                  key: DATABASE_URL
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudops-copilot-secrets
+                  key: OPENAI_API_KEY
+            - name: APP_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudops-copilot-secrets
+                  key: APP_API_KEY
+                  optional: true
+            - name: EMBEDDING_PROVIDER
+              value: openai
+            - name: EMBEDDING_DIMENSIONS
+              value: "1536"
+            - name: OPENAI_EMBEDDING_MODEL
+              value: text-embedding-3-small
+            - name: OPENAI_MODEL
+              value: gpt-4o-mini
+            - name: RUNBOOKS_DIR
+              value: /app/runbooks
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault

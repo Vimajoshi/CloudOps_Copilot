@@ -1,0 +1,14 @@
+[
+  {"incident": "The checkout container keeps restarting with CrashLoopBackOff after startup. The previous container log shows a configuration error.", "expected_filename": "crashloopbackoff.md"},
+  {"incident": "A new pod cannot download its image: ErrImagePull followed by ImagePullBackOff and registry authentication failed.", "expected_filename": "imagepullbackoff.md"},
+  {"incident": "A container terminated with OOMKilled after memory climbed steadily and Kubernetes restarted it.", "expected_filename": "oomkilled.md"},
+  {"incident": "A worker node is NotReady and its pods are unavailable; the node condition reports kubelet connectivity problems.", "expected_filename": "node-not-ready.md"},
+  {"incident": "Pods in a namespace see DNS lookup timeouts when resolving cluster service names; CoreDNS may be unhealthy.", "expected_filename": "dns-timeouts.md"},
+  {"incident": "The ingress returns 502 Bad Gateway for the application route and cannot connect to its upstream backend.", "expected_filename": "ingress-502.md"},
+  {"incident": "New pods remain Pending with scheduler events reporting insufficient CPU and no nodes available.", "expected_filename": "pending-pods.md"},
+  {"incident": "A pod cannot mount its persistent volume and its PVC remains Pending because of a storage class mismatch.", "expected_filename": "volume-mount.md"},
+  {"incident": "Requests to a Kubernetes service fail because the service selector has no matching ready endpoints.", "expected_filename": "service-unreachable.md"},
+  {"incident": "Clients report that the TLS certificate served by the ingress hostname has expired.", "expected_filename": "certificate-expired.md"},
+  {"incident": "A deployment rollout is stuck because new replicas fail readiness checks after a release.", "expected_filename": "rollout-failure.md"},
+  {"incident": "Applications receive database connection limit errors and the database has too many idle sessions.", "expected_filename": "database-connections.md"}
+]

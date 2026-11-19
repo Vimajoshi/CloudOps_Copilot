@@ -1,0 +1,4 @@
+# Copy to terraform.tfvars and choose globally unique resource names.
+acr_name             = "replacewithuniqueacrname"
+postgres_server_name = "replace-with-unique-pg-name"
+# Set TF_VAR_postgres_admin_password separately; do not commit credentials.
