@@ -15,8 +15,7 @@ services:
   api:
     build: .
     environment:
-      DATABASE_URL: postgresql://cloudops:${POSTGRES_PASSWORD:-local-dev-only}@db:5432/cloudops
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      DATABASE_URL: postgresql://cloudops:${}
       OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
       OPENAI_EMBEDDING_MODEL: ${OPENAI_EMBEDDING_MODEL:-text-embedding-3-small}
       EMBEDDING_PROVIDER: openai
